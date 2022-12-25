@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState, useEffect} from "react"
+// Import the following components
+import AuthPage from "./Pages/AuthPage/AuthPage"
+import ReservationPage from "./Pages/ReservationPage/ReservationPage"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App(){
+    const [user, setUser] = useState(null)
+    
+    return(
+        //conditionally rendering based upon whether 
+        //the state of useris null(user not logged in) 
+        //or not null(user logged in).
+        <main className="App">
+            {
+                user?
+                <ReservationPage/>
+                :
+                <AuthPage/>
+            }
+        </main>
+    )
 }
 
-export default App;
+
+// Ternary expressions: Used to render one component or another.
+// Logical (&&) expressions: Used to render a component or nothing.
