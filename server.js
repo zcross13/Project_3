@@ -1,6 +1,12 @@
 // require the modules;
+require('dotenv').config();
+// Always require and configure near the top
+// Connect to the database
+require('./config/database');
 const express = require('express');
 const path = require('path');
+// Configure both serve-favicon & static middleware
+// to serve from the production 'build' folder
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 
@@ -16,10 +22,19 @@ app.use(express.json());
 // to serve from the production 'build' folder
 app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'build')));
+
+// Check if token and create req.user
+app.use(require('./config/checkToken'))
+
 // Put API routes here, before the "catch all" route
+app.use('/api/reservations', require('./routes/api/reservations'))
 
 // The following "catch all" route (note the *) is necessary
-// to return the index.html when any non-AJAX request is made to express
+// to return the index.html on all non-AJAX requests is made to express 
+app.get('/api/test', (req, res) => {
+    res.json({'eureka': 'you have found it'})
+})
+
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
