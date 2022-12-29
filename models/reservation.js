@@ -3,23 +3,23 @@ const {Schema, model } = require('mongoose')
 const reservationSchema = new Schema({
     telsa: 
         {
-            type: mongoose.Schema.Types.ObjectId,           
+            type: Schema.Types.ObjectId,           
             ref:'Telsa', 
             required: true
         }, 
-    pickupLocation: 
+    pickupDate: 
         {
             type: Date,
             required: true
         } ,
-    dropoffLocation: 
+    returnDate: 
         {
             type: Date,
             required: true
         }, 
     profile: 
         {
-            type: mongoose.Schema.Types.ObjectId, 
+            type: Schema.Types.ObjectId, 
             ref:'Profile'
         }
 })

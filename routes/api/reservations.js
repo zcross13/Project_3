@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { dataController, apiController } = require('../../controllers/api/reservations')
+const { dataController, apiController } = require('../../controller/api/reservations')
 
 // add routes
 // Index /api/reservations

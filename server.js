@@ -1,25 +1,19 @@
-// require the modules;
 require('dotenv').config();
-// Always require and configure near the top
-// Connect to the database
 require('./config/database');
+
 const express = require('express');
 const path = require('path');
-// Configure both serve-favicon & static middleware
-// to serve from the production 'build' folder
 const favicon = require('serve-favicon');
 const logger = require('morgan');
-
-//create the Express app
 const app = express();
 
-//mount the morgan logging middleware and 
+
 app.use(logger('dev'));
-//express.json()middleware that processes JSON data 
-//sent in the AJAX request and adds it to the req.body
 app.use(express.json());
-// Configure both serve-favicon & static middleware
-// to serve from the production 'build' folder
+app.use((req,res,next) => {
+  res.locals.data = {}
+  next()
+})
 app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -27,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use(require('./config/checkToken'))
 
 // Put API routes here, before the "catch all" route
+app.use('/api/teslas', require('./routes/api/teslas'))
 app.use('/api/reservations', require('./routes/api/reservations'))
 
 // The following "catch all" route (note the *) is necessary
